@@ -1,25 +1,81 @@
-<!doctype html>
-<html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#10263d"><title>Don Bosco Safe</title>
-<link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css"><script src="js/app.js" defer></script>
-</head><body>
-<main class="app-shell">
-<header class="topbar"><div class="brand-mark">✚</div><div class="brand-copy"><strong>DON BOSCO <span>SAFE</span></strong><small>Perlindungan siswa</small></div><button class="icon-btn" id="helpBtn">?</button></header>
-<section class="welcome"><div class="eyebrow">KAMU TIDAK SENDIRIAN</div><h1>Butuh bantuan?</h1><p>Pilih tombol yang sesuai. Petugas sekolah akan menindaklanjuti laporan.</p></section>
-<section class="action-grid">
-<button class="action sos-action" id="sosBtn"><span class="action-icon">SOS</span><span class="action-title">DARURAT</span><span class="action-desc">Tekan & tahan</span></button>
-<button class="action witness-action" id="witnessBtn"><span class="action-icon">👁</span><span class="action-title">LIHAT KEJADIAN?</span><span class="action-desc">Lapor sebagai saksi</span></button>
-<button class="action bully-action" id="bullyBtn"><span class="action-icon">🛡</span><span class="action-title">SAYA DI-BULLY</span><span class="action-desc">Minta pendampingan</span></button>
-<button class="action safe-action" id="safeBtn"><span class="action-icon">⌖</span><span class="action-title">LOKASI AMAN</span><span class="action-desc">Cari tempat meminta bantuan</span></button>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10263d">
+<title>DON BOSCO SAFE</title>
+<style>
+:root{--navy:#10263d;--muted:#718092;--line:#e4eaf0;--red:#c93646;--blue:#2869ad;--green:#18856e}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#edf2f6;color:#1b2b3c;font-family:Arial,Helvetica,sans-serif;display:flex;justify-content:center}
+button{font:inherit;cursor:pointer}
+.app{width:100%;max-width:510px;min-height:100vh;background:#fff;padding:calc(12px + env(safe-area-inset-top)) 22px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;box-shadow:0 0 45px #152e4610}
+header{height:62px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line)}
+.logo{height:40px;width:40px;border-radius:12px;background:var(--navy);color:#9de1c6;display:grid;place-items:center;font-size:25px;font-weight:bold}
+.brand{flex:1}.brand strong{font-size:14px;letter-spacing:1.1px;color:var(--navy)}.brand strong span{color:var(--green)}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.help{height:34px;width:34px;border:1px solid var(--line);border-radius:50%;background:white;color:#53677a;font-weight:bold}
+.intro{padding:27px 2px 18px}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:bold;color:var(--green)}h1{font-size:30px;line-height:1.12;letter-spacing:-.8px;margin:8px 0;color:var(--navy)}.intro p{font-size:13px;line-height:1.5;color:var(--muted);margin:0;max-width:360px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:7px 0 18px;flex:1;align-content:start}
+.tile{border:0;border-radius:19px;min-height:158px;padding:17px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;box-shadow:0 5px 14px #1c35500c;transition:transform .12s}
+.tile:active{transform:scale(.975)}
+.sos{grid-column:span 2;min-height:183px;color:white;background:linear-gradient(145deg,#d94b59,#b72e3d)}
+.witness{background:#fff3e2;color:#85520e}.bully{background:#edf4ff;color:#285d94}.safe{grid-column:span 2;min-height:125px;background:#eaf7f1;color:#16745f}
+.icon{height:61px;min-width:61px;padding:0 9px;border-radius:50%;display:grid;place-items:center;background:#ffffffc9;font-size:27px;font-weight:900}
+.sos .icon{height:78px;min-width:78px;background:white;color:#b52d3b;font-size:25px;box-shadow:0 4px 0 #f1c4c8}
+.title{font-size:13px;font-weight:900;letter-spacing:.3px}.sos .title{font-size:17px}.desc{font-size:11px;opacity:.8}
+.privacy{display:flex;align-items:flex-start;gap:9px;background:#f4f7f9;border-radius:12px;padding:12px;color:#66778a;font-size:10px;line-height:1.45}.privacy b{font-size:15px}
+.staff{align-self:center;border:0;background:transparent;color:#8995a2;text-decoration:underline;font-size:10px;padding:6px;margin:10px 0 4px}
+footer{text-align:center;color:#9aa5b0;font-size:9px;letter-spacing:.4px;padding:5px}
+.overlay{position:fixed;inset:0;background:#0c1e31aa;z-index:5;display:flex;align-items:flex-end;justify-content:center;padding:12px}.overlay[hidden]{display:none}
+.sheet{width:100%;max-width:480px;background:white;border-radius:22px;padding:24px 20px 18px;position:relative;max-height:88vh;overflow:auto;box-shadow:0 20px 60px #07162655}
+.close{position:absolute;right:15px;top:13px;border:0;background:#f0f3f6;border-radius:50%;width:32px;height:32px;font-size:22px;color:#5c6c7d}
+.sheet-icon{width:47px;height:47px;border-radius:14px;background:#edf3f7;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
+.sheet h2{margin:0 38px 6px 0;color:var(--navy);font-size:21px}.sheet p{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 14px}
+.choices{display:grid;gap:8px;margin:12px 0}.choice{border:1px solid var(--line);background:white;border-radius:11px;padding:13px;text-align:left;color:#31475d;font-size:13px;font-weight:bold}.choice.active{border:2px solid var(--blue);background:#f0f6ff;padding:12px}
+.quick{background:#f1f7f4;border:1px solid #dcece4;border-radius:11px;padding:12px;font-size:12px;color:#3f6657;margin:8px 0}
+.sheet-buttons{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:16px}.send,.cancel{border:0;border-radius:10px;padding:13px 16px;font-size:13px;font-weight:bold}.send{background:var(--navy);color:white}.cancel{background:#eef2f5;color:#506174}
+.toast{position:fixed;z-index:9;bottom:24px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172f47;color:white;padding:12px 16px;border-radius:12px;font-size:12px;max-width:calc(100% - 30px);text-align:center;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:600px){body{padding:24px 0}.app{min-height:calc(100vh - 48px);border-radius:25px;overflow:hidden}.overlay{align-items:center}}
+@media(max-width:360px){.app{padding-left:15px;padding-right:15px}.tile{min-height:145px}.sos{min-height:170px}.safe{min-height:115px}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div class="logo">✚</div><div class="brand"><strong>DON BOSCO <span>SAFE</span></strong><small>Perlindungan siswa</small></div><button class="help" id="help">?</button></header>
+<section class="intro"><div class="eyebrow">KAMU TIDAK SENDIRIAN</div><h1>Butuh bantuan?</h1><p>Pilih tombol yang sesuai. Petugas sekolah akan menindaklanjuti laporan.</p></section>
+<section class="actions">
+<button class="tile sos" id="sos"><span class="icon">SOS</span><span class="title">DARURAT</span><span class="desc">Tekan & tahan</span></button>
+<button class="tile witness" id="witness"><span class="icon">👁</span><span class="title">LIHAT KEJADIAN?</span><span class="desc">Lapor sebagai saksi</span></button>
+<button class="tile bully" id="bully"><span class="icon">🛡</span><span class="title">SAYA DI-BULLY</span><span class="desc">Minta pendampingan</span></button>
+<button class="tile safe" id="safe"><span class="icon">⌖</span><span class="title">LOKASI AMAN</span><span class="desc">Cari tempat meminta bantuan</span></button>
 </section>
-<div class="privacy-note"><span>🔒</span><span>Laporan ditangani petugas berwenang. Identitas pelapor tidak ditampilkan kepada siswa lain.</span></div>
-<button class="staff-link" id="staffBtn">Panel simulasi petugas</button>
+<div class="privacy"><b>🔒</b><span>Laporan ditangani petugas berwenang. Identitas pelapor tidak ditampilkan kepada siswa lain.</span></div>
+<button class="staff" id="staff">Panel simulasi petugas</button>
 <footer>DON BOSCO SAFE · DEMO / BUKAN LAYANAN DARURAT AKTUAL</footer>
 </main>
-<div class="overlay" id="overlay" hidden><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
-<button class="close-btn" id="closeSheet">×</button><div class="sheet-symbol" id="sheetSymbol">!</div><h2 id="sheetTitle">Butuh bantuan?</h2><p id="sheetText" class="sheet-text"></p><div id="sheetChoices" class="choice-list"></div><div id="sheetExtra"></div>
-<div class="sheet-actions"><button class="primary-btn" id="sheetPrimary">Kirim laporan</button><button class="quiet-btn" id="sheetCancel">Kembali</button></div>
-</section></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="overlay" id="overlay" hidden><section class="sheet" role="dialog" aria-modal="true"><button class="close" id="close">×</button><div class="sheet-icon" id="sheetIcon">!</div><h2 id="sheetTitle"></h2><p id="sheetText"></p><div class="choices" id="choices"></div><div id="extra"></div><div class="sheet-buttons"><button class="send" id="send">Kirim laporan</button><button class="cancel" id="cancel">Kembali</button></div></section></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id);let mode="",selected="",reports=[],hold=null,toastTimer;
+function toast(t){$("toast").textContent=t;$("toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2800)}
+function close(){ $("overlay").hidden=true }
+function open(kind,title,desc,icon,opts=[]){
+mode=kind;selected=opts[0]||"";$("sheetTitle").textContent=title;$("sheetText").textContent=desc;$("sheetIcon").textContent=icon;$("choices").innerHTML="";$("extra").innerHTML="";
+opts.forEach((o,i)=>{let b=document.createElement("button");b.className="choice"+(i===0?" active":"");b.textContent=o;b.onclick=()=>{selected=o;document.querySelectorAll(".choice").forEach(x=>x.classList.toggle("active",x===b))};$("choices").appendChild(b)});
+$("send").style.display=kind==="safe"?"none":"block";$("overlay").hidden=false;
+}
+function send(type,detail){reports.unshift({type,detail,time:new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})});close();toast("✓ Simulasi laporan terkirim ke petugas sekolah.")}
+$("sos").addEventListener("pointerdown",e=>{e.preventDefault();$("sos").style.transform="scale(.97)";hold=setTimeout(()=>send("SOS DARURAT","Butuh pertolongan segera"),1300)});
+["pointerup","pointerleave","pointercancel"].forEach(ev=>$("sos").addEventListener(ev,()=>{clearTimeout(hold);$("sos").style.transform=""}));
+$("witness").onclick=()=>open("witness","Apa yang kamu lihat?","Pilih kejadian. Tidak perlu mengetik atau mendekati pelaku.","👁",["Perkelahian","Pengeroyokan","Bullying fisik","Ancaman / intimidasi"]);
+$("bully").onclick=()=>open("bully","Kamu tidak sendiri.","Pilih jenis kejadian. Petugas akan menindaklanjuti secara pribadi.","🛡",["Diejek / dihina","Dikucilkan","Diancam / diperas","Disakiti secara fisik","Bullying online"]);
+$("safe").onclick=()=>{open("safe","Tempat meminta bantuan","Jika merasa tidak aman, pergilah ke tempat ramai dan cari orang dewasa tepercaya.","⌖");$("extra").innerHTML='<div class="quick">📍 <b>Ruang Guru</b><br>Temui guru yang bertugas.</div><div class="quick">📍 <b>Ruang BK</b><br>Meminta pendampingan.</div><div class="quick">📍 <b>Pos Keamanan</b><br>Untuk bantuan segera.</div>'};
+$("help").onclick=()=>open("help","Cara menggunakan","DARURAT: tekan dan tahan. LIHAT KEJADIAN: laporkan sebagai saksi. SAYA DI-BULLY: minta pendampingan. Jangan mendekati pelaku.","?",["Saya mengerti"]);
+$("send").onclick=()=>{if(mode==="witness")send("SAFE WITNESS",selected);else if(mode==="bully")send("ANTI-BULLYING",selected);else if(mode==="help"){close();toast("Tetap jaga keselamatan.")}};
+$("close").onclick=close;$("cancel").onclick=close;$("overlay").onclick=e=>{if(e.target===$("overlay"))close()};
+$("staff").onclick=()=>alert("PANEL PETUGAS — SIMULASI\n\n"+(reports.length?reports.map(r=>r.time+" · "+r.type+" · "+r.detail).join("\n"):"Belum ada laporan.")+"\n\nData hanya tersimpan sementara di browser ini.");
+})();
+</script>
 </body></html>
