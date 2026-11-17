@@ -1,91 +1,25 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#142b45">
-<title>Don Bosco Safe — Simulasi Perlindungan Siswa</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<header class="top">
-  <div class="brand"><div class="logo">🛡️</div><div><h1>DON BOSCO SAFE</h1><p>Student Protection & Anti-Bullying System</p></div></div>
-  <div class="demo-pill">PROTOTIPE INTERAKTIF · DEMO</div>
-</header>
-<main class="wrap">
-  <section class="intro">
-    <div><div class="eyebrow">Ruang aman untuk setiap siswa</div><h2>Perlindungan dimulai dari keberanian meminta bantuan.</h2><p>Prototipe konsep untuk membantu siswa meminta pertolongan, menghubungkan petugas, dan menyampaikan peringatan keselamatan tanpa membuka identitas korban kepada seluruh komunitas.</p></div>
-    <div class="status">● Mode simulasi aktif</div>
-  </section>
-  <section class="stats">
-    <div class="stat"><span>Laporan simulasi</span><strong id="statReports">0</strong><small>Total kejadian pada sesi ini</small></div>
-    <div class="stat"><span>Perlu tindak lanjut</span><strong id="statOpen">0</strong><small>Belum ditandai selesai</small></div>
-    <div class="stat"><span>Notifikasi komunitas</span><strong id="statCommunity">0</strong><small>Peringatan umum, tanpa identitas</small></div>
-  </section>
-
-  <div class="layout">
-    <div>
-      <section class="panel">
-        <div class="panel-head"><div><h3>🆘 Minta bantuan</h3><p class="sub">Simulasikan laporan dari akun siswa.</p></div><span class="tag">SISI SISWA</span></div>
-        <div class="field"><label for="student">Pilih akun siswa demo</label><select id="student"><option value="Alya Pratama · 8A">Alya Pratama · 8A</option><option value="Bima Saputra · 7B">Bima Saputra · 7B</option><option value="Citra Lestari · 10 IPA 1">Citra Lestari · 10 IPA 1</option><option value="Dimas Putra · 5A">Dimas Putra · 5A</option></select></div>
-        <div class="field"><label>Tingkat bantuan</label>
-          <div class="levels">
-            <button class="level active" data-level="3"><b>🔴 Darurat</b><small>Ancaman langsung atau kekerasan.</small></button>
-            <button class="level" data-level="2"><b>🟠 Butuh bantuan</b><small>Intimidasi atau bullying.</small></button>
-            <button class="level" data-level="1"><b>🔵 Laporan</b><small>Pengaduan untuk ditindaklanjuti.</small></button>
-          </div>
-        </div>
-        <div class="field"><label for="place">Lokasi kejadian (simulasi)</label><select id="place"><option>Gedung belakang</option><option>Koridor lantai 2</option><option>Lapangan sekolah</option><option>Perpustakaan</option><option>Toilet sekolah</option><option>Area kantin</option></select></div>
-        <div class="field"><label for="detail">Keterangan singkat (opsional)</label><textarea id="detail" placeholder="Contoh: Saya merasa tidak aman dan membutuhkan bantuan."></textarea></div>
-        <div class="sos-area">
-          <button id="sos" class="sos-button" aria-label="Tekan dan tahan untuk mengirim simulasi SOS">SOS</button>
-          <p class="sos-hint">Tekan dan tahan selama 2 detik untuk memulai simulasi. Ini bukan panggilan darurat sungguhan.</p>
-        </div>
-        <div class="notice info">Dalam penerapan nyata, lokasi hanya dibagikan setelah izin pengguna dan hanya kepada petugas berwenang sesuai kebutuhan.</div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head"><div><h3>📍 Peta area sekolah</h3><p class="sub">Peta ilustrasi untuk demonstrasi lokasi laporan.</p></div><span class="tag">ILUSTRASI</span></div>
-        <div class="map"><div class="building" style="left:8%;top:14%">GEDUNG A</div><div class="building" style="left:67%;top:15%">PERPUSTAKAAN</div><div class="building" style="left:12%;top:72%">KANTIN</div><div class="building" style="left:67%;top:72%">LAPANGAN</div><div class="pin"></div><div class="maplabel">Lokasi demo</div></div>
-        <p class="sub">Peta ini bukan GPS. Lokasi kejadian dipilih secara manual untuk simulasi.</p>
-      </section>
-    </div>
-
-    <div>
-      <section class="panel">
-        <div class="panel-head"><div><h3>📡 Pusat notifikasi</h3><p class="sub">Lihat siapa yang menerima informasi.</p></div><span class="tag">SIMULASI ALUR</span></div>
-        <div class="tabs"><button class="tab active" data-tab="staff">Petugas</button><button class="tab" data-tab="team">Pendamping</button><button class="tab" data-tab="community">Komunitas</button></div>
-        <div id="notificationView"><div class="empty"><span>🔔</span>Belum ada notifikasi. Coba kirim simulasi SOS.</div></div>
-        <div class="notice warn">Detail identitas dan lokasi korban hanya untuk petugas yang berwenang. Komunitas hanya menerima peringatan keselamatan umum jika diperlukan.</div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head"><div><h3>🗂️ Riwayat laporan</h3><p class="sub">Catatan kejadian pada sesi demo ini.</p></div><button class="btn outline" id="reset">Reset demo</button></div>
-        <div id="incidentList"><div class="empty"><span>📝</span>Belum ada laporan.</div></div>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head"><div><h3>🛡️ Perlindungan dari penyalahgunaan</h3></div><span class="tag">ANTI-MISUSE</span></div>
-        <p class="sub">Dalam simulasi ini, aktivasi yang sengaja ditandai sebagai penyalahgunaan akan menambah hitungan. Tiga kejadian memicu pembekuan akun demo untuk pemeriksaan, bukan penghapusan akses pertolongan.</p>
-        <div class="field"><label for="misuseStudent">Akun demo</label><select id="misuseStudent"><option>Alya Pratama · 8A</option><option>Bima Saputra · 7B</option><option>Citra Lestari · 10 IPA 1</option><option>Dimas Putra · 5A</option></select></div>
-        <div class="row"><button class="btn secondary" id="misuse">+ Catat penyalahgunaan (demo)</button><button class="btn outline" id="clearMisuse">Reset hitungan</button></div>
-        <div id="misuseStatus" class="notice info">Belum ada catatan penyalahgunaan.</div>
-      </section>
-    </div>
-  </div>
-  <footer>DON BOSCO SAFE · Konsep inovasi perlindungan siswa · Versi demonstrasi satu file</footer>
+<!doctype html>
+<html lang="id"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10263d"><title>Don Bosco Safe</title>
+<link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css"><script src="js/app.js" defer></script>
+</head><body>
+<main class="app-shell">
+<header class="topbar"><div class="brand-mark">✚</div><div class="brand-copy"><strong>DON BOSCO <span>SAFE</span></strong><small>Perlindungan siswa</small></div><button class="icon-btn" id="helpBtn">?</button></header>
+<section class="welcome"><div class="eyebrow">KAMU TIDAK SENDIRIAN</div><h1>Butuh bantuan?</h1><p>Pilih tombol yang sesuai. Petugas sekolah akan menindaklanjuti laporan.</p></section>
+<section class="action-grid">
+<button class="action sos-action" id="sosBtn"><span class="action-icon">SOS</span><span class="action-title">DARURAT</span><span class="action-desc">Tekan & tahan</span></button>
+<button class="action witness-action" id="witnessBtn"><span class="action-icon">👁</span><span class="action-title">LIHAT KEJADIAN?</span><span class="action-desc">Lapor sebagai saksi</span></button>
+<button class="action bully-action" id="bullyBtn"><span class="action-icon">🛡</span><span class="action-title">SAYA DI-BULLY</span><span class="action-desc">Minta pendampingan</span></button>
+<button class="action safe-action" id="safeBtn"><span class="action-icon">⌖</span><span class="action-title">LOKASI AMAN</span><span class="action-desc">Cari tempat meminta bantuan</span></button>
+</section>
+<div class="privacy-note"><span>🔒</span><span>Laporan ditangani petugas berwenang. Identitas pelapor tidak ditampilkan kepada siswa lain.</span></div>
+<button class="staff-link" id="staffBtn">Panel simulasi petugas</button>
+<footer>DON BOSCO SAFE · DEMO / BUKAN LAYANAN DARURAT AKTUAL</footer>
 </main>
-
-<div class="modal-back" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <h3 id="modalTitle">Konfirmasi sinyal bantuan</h3>
-    <p>Pastikan kamu benar-benar membutuhkan bantuan. Jika situasinya darurat, petugas akan menerima laporan simulasi ini.</p>
-    <div class="countdown" id="countdown">3</div>
-    <div class="row"><button class="btn danger" id="confirmSOS" style="flex:1">Kirim sinyal</button><button class="btn secondary" id="cancelSOS">Batalkan</button></div>
-    <p style="font-size:10px;margin-bottom:0">Pada sistem nyata, jangan menunda bantuan darurat hanya untuk menyelesaikan konfirmasi.</p>
-  </div>
-</div>
-
-<script src="js/app.js" defer></script>
-</body>
-</html>
+<div class="overlay" id="overlay" hidden><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+<button class="close-btn" id="closeSheet">×</button><div class="sheet-symbol" id="sheetSymbol">!</div><h2 id="sheetTitle">Butuh bantuan?</h2><p id="sheetText" class="sheet-text"></p><div id="sheetChoices" class="choice-list"></div><div id="sheetExtra"></div>
+<div class="sheet-actions"><button class="primary-btn" id="sheetPrimary">Kirim laporan</button><button class="quiet-btn" id="sheetCancel">Kembali</button></div>
+</section></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>
