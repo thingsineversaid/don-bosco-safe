@@ -1,81 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#10263d">
 <title>DON BOSCO SAFE</title>
 <style>
-:root{--navy:#10263d;--muted:#718092;--line:#e4eaf0;--red:#c93646;--blue:#2869ad;--green:#18856e}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:#edf2f6;color:#1b2b3c;font-family:Arial,Helvetica,sans-serif;display:flex;justify-content:center}
-button{font:inherit;cursor:pointer}
-.app{width:100%;max-width:510px;min-height:100vh;background:#fff;padding:calc(12px + env(safe-area-inset-top)) 22px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;box-shadow:0 0 45px #152e4610}
-header{height:62px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line)}
-.logo{height:40px;width:40px;border-radius:12px;background:var(--navy);color:#9de1c6;display:grid;place-items:center;font-size:25px;font-weight:bold}
-.brand{flex:1}.brand strong{font-size:14px;letter-spacing:1.1px;color:var(--navy)}.brand strong span{color:var(--green)}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-.help{height:34px;width:34px;border:1px solid var(--line);border-radius:50%;background:white;color:#53677a;font-weight:bold}
-.intro{padding:27px 2px 18px}.eyebrow{font-size:10px;letter-spacing:2px;font-weight:bold;color:var(--green)}h1{font-size:30px;line-height:1.12;letter-spacing:-.8px;margin:8px 0;color:var(--navy)}.intro p{font-size:13px;line-height:1.5;color:var(--muted);margin:0;max-width:360px}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:7px 0 18px;flex:1;align-content:start}
-.tile{border:0;border-radius:19px;min-height:158px;padding:17px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:7px;box-shadow:0 5px 14px #1c35500c;transition:transform .12s}
-.tile:active{transform:scale(.975)}
-.sos{grid-column:span 2;min-height:183px;color:white;background:linear-gradient(145deg,#d94b59,#b72e3d)}
-.witness{background:#fff3e2;color:#85520e}.bully{background:#edf4ff;color:#285d94}.safe{grid-column:span 2;min-height:125px;background:#eaf7f1;color:#16745f}
-.icon{height:61px;min-width:61px;padding:0 9px;border-radius:50%;display:grid;place-items:center;background:#ffffffc9;font-size:27px;font-weight:900}
-.sos .icon{height:78px;min-width:78px;background:white;color:#b52d3b;font-size:25px;box-shadow:0 4px 0 #f1c4c8}
-.title{font-size:13px;font-weight:900;letter-spacing:.3px}.sos .title{font-size:17px}.desc{font-size:11px;opacity:.8}
-.privacy{display:flex;align-items:flex-start;gap:9px;background:#f4f7f9;border-radius:12px;padding:12px;color:#66778a;font-size:10px;line-height:1.45}.privacy b{font-size:15px}
-.staff{align-self:center;border:0;background:transparent;color:#8995a2;text-decoration:underline;font-size:10px;padding:6px;margin:10px 0 4px}
-footer{text-align:center;color:#9aa5b0;font-size:9px;letter-spacing:.4px;padding:5px}
-.overlay{position:fixed;inset:0;background:#0c1e31aa;z-index:5;display:flex;align-items:flex-end;justify-content:center;padding:12px}.overlay[hidden]{display:none}
-.sheet{width:100%;max-width:480px;background:white;border-radius:22px;padding:24px 20px 18px;position:relative;max-height:88vh;overflow:auto;box-shadow:0 20px 60px #07162655}
-.close{position:absolute;right:15px;top:13px;border:0;background:#f0f3f6;border-radius:50%;width:32px;height:32px;font-size:22px;color:#5c6c7d}
-.sheet-icon{width:47px;height:47px;border-radius:14px;background:#edf3f7;display:grid;place-items:center;font-size:22px;margin-bottom:12px}
-.sheet h2{margin:0 38px 6px 0;color:var(--navy);font-size:21px}.sheet p{font-size:12px;line-height:1.5;color:var(--muted);margin:0 0 14px}
-.choices{display:grid;gap:8px;margin:12px 0}.choice{border:1px solid var(--line);background:white;border-radius:11px;padding:13px;text-align:left;color:#31475d;font-size:13px;font-weight:bold}.choice.active{border:2px solid var(--blue);background:#f0f6ff;padding:12px}
-.quick{background:#f1f7f4;border:1px solid #dcece4;border-radius:11px;padding:12px;font-size:12px;color:#3f6657;margin:8px 0}
-.sheet-buttons{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:16px}.send,.cancel{border:0;border-radius:10px;padding:13px 16px;font-size:13px;font-weight:bold}.send{background:var(--navy);color:white}.cancel{background:#eef2f5;color:#506174}
-.toast{position:fixed;z-index:9;bottom:24px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#172f47;color:white;padding:12px 16px;border-radius:12px;font-size:12px;max-width:calc(100% - 30px);text-align:center;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
-@media(min-width:600px){body{padding:24px 0}.app{min-height:calc(100vh - 48px);border-radius:25px;overflow:hidden}.overlay{align-items:center}}
-@media(max-width:360px){.app{padding-left:15px;padding-right:15px}.tile{min-height:145px}.sos{min-height:170px}.safe{min-height:115px}}
+:root{--navy:#10263d;--navy2:#1d3d59;--ink:#1b2b3c;--muted:#718092;--line:#e4eaf0;--red:#c93646;--blue:#2869ad;--green:#18856e;--amber:#b77717}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:#edf2f6;color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,input,select{font:inherit}button{cursor:pointer}
+.app{width:100%;max-width:520px;min-height:100vh;margin:auto;background:#fff;padding:calc(12px + env(safe-area-inset-top)) 21px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;box-shadow:0 0 45px #152e4610}
+header{height:58px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--line)}.logo{height:39px;width:39px;border-radius:12px;background:var(--navy);color:#9de1c6;display:grid;place-items:center;font-size:24px;font-weight:bold}.brand{flex:1}.brand strong{font-size:14px;letter-spacing:1px;color:var(--navy)}.brand strong span{color:var(--green)}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.topbtn{border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 10px;font-size:11px;color:#52677b}
+h1{font-size:28px;line-height:1.13;letter-spacing:-.7px;color:var(--navy);margin:9px 0}.muted{color:var(--muted);font-size:13px;line-height:1.5}.eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:bold;color:var(--green)}
+.screen{display:none;flex:1}.screen.active{display:flex;flex-direction:column}
+.login-intro{padding:28px 2px 18px}.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:8px 0 18px}.role{border:1px solid var(--line);background:#f9fbfd;border-radius:16px;padding:18px 10px;text-align:center;color:var(--navy)}.role .emoji{font-size:29px;display:block;margin-bottom:7px}.role b{font-size:13px}.role small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.card{border:1px solid var(--line);border-radius:17px;padding:17px;margin:12px 0;box-shadow:0 5px 18px #17314b08}.card h2{font-size:17px;color:var(--navy);margin:0 0 5px}.field{margin:11px 0}.field label{display:block;font-size:11px;font-weight:bold;color:#43566b;margin-bottom:5px}.field input,.field select{width:100%;border:1px solid #dce4eb;border-radius:10px;padding:11px;background:#fbfcfe;outline:none;font-size:13px}.field input:focus,.field select:focus{border-color:#6c9ac4;box-shadow:0 0 0 3px #2869ad18}
+.btn{border:0;border-radius:11px;padding:12px 15px;font-weight:bold;font-size:13px}.primary{background:var(--navy);color:white}.secondary{background:#edf2f6;color:#405368}.full{width:100%}.back{background:none;border:0;color:#61758a;padding:8px 0;text-align:left;font-size:12px}
+.note{background:#f3f7fa;border-radius:11px;padding:11px;font-size:10px;color:#68798a;line-height:1.5}.warning{background:#fff5e6;color:#875d19}.danger-note{background:#fff0f1;color:#8d303b}
+.home-head{padding:22px 2px 15px}.home-head h1{margin-bottom:4px}.profile-chip{font-size:11px;color:#66798b}.actions{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:5px 0 15px}.tile{border:0;border-radius:18px;min-height:150px;padding:15px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;box-shadow:0 5px 14px #1c35500c}.tile:active{transform:scale(.975)}.sos{grid-column:span 2;min-height:178px;background:linear-gradient(145deg,#d94b59,#b72e3d);color:white}.witness{background:#fff3e2;color:#85520e}.bully{background:#edf4ff;color:#285d94}.safe{grid-column:span 2;min-height:112px;background:#eaf7f1;color:#16745f}.tile-icon{height:57px;min-width:57px;padding:0 9px;border-radius:50%;background:#ffffffc9;display:grid;place-items:center;font-size:25px;font-weight:900}.sos .tile-icon{height:74px;min-width:74px;background:white;color:#b52d3b;font-size:24px}.tile b{font-size:13px;letter-spacing:.3px}.sos b{font-size:16px}.tile small{font-size:10px;opacity:.8}
+.privacy{display:flex;gap:8px;background:#f4f7f9;border-radius:11px;padding:11px;color:#66778a;font-size:10px;line-height:1.45}.bottomrow{display:flex;justify-content:space-between;gap:8px;margin-top:12px}.linkbtn{border:0;background:none;color:#7d8c9b;text-decoration:underline;font-size:10px;padding:8px 0}
+.dashboard-title{padding:20px 2px 10px}.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{background:#f4f7fa;border-radius:12px;padding:13px}.stat strong{display:block;font-size:24px;color:var(--navy)}.stat span{font-size:10px;color:var(--muted)}.report{border:1px solid var(--line);border-radius:12px;padding:12px;margin:9px 0}.reporttop{display:flex;justify-content:space-between;gap:8px}.report b{font-size:12px}.report p{font-size:11px;color:var(--muted);margin:5px 0}.pill{font-size:9px;font-weight:bold;border-radius:20px;padding:4px 7px;background:#fff0f1;color:var(--red)}.pill.amber{background:#fff5e6;color:#986617}.pill.green{background:#e8f6f1;color:#16745f}
+.overlay{position:fixed;inset:0;background:#0c1e31aa;z-index:5;display:flex;align-items:flex-end;justify-content:center;padding:12px}.overlay[hidden]{display:none}.sheet{width:100%;max-width:480px;background:#fff;border-radius:22px;padding:23px 19px 18px;max-height:88vh;overflow:auto;position:relative}.close{position:absolute;right:14px;top:12px;border:0;background:#f0f3f6;border-radius:50%;width:31px;height:31px;font-size:22px}.sheet h2{font-size:20px;color:var(--navy);margin:0 35px 6px 0}.sheet p{font-size:12px;color:var(--muted);line-height:1.5}.choices{display:grid;gap:8px}.choice{border:1px solid var(--line);border-radius:10px;background:white;padding:12px;text-align:left;font-size:12px;font-weight:bold;color:#405368}.choice.active{border:2px solid var(--blue);background:#f0f6ff;padding:11px}.sheetbuttons{display:flex;gap:8px;margin-top:14px}.sheetbuttons button:first-child{flex:1}
+.toast{position:fixed;z-index:10;bottom:23px;left:50%;transform:translate(-50%,20px);opacity:0;background:#172f47;color:white;padding:12px 15px;border-radius:12px;font-size:12px;max-width:calc(100% - 28px);text-align:center;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:600px){body{padding:22px 0}.app{min-height:calc(100vh - 44px);border-radius:25px;overflow:hidden}.overlay{align-items:center}}
 </style>
 </head>
 <body>
 <main class="app">
-<header><div class="logo">✚</div><div class="brand"><strong>DON BOSCO <span>SAFE</span></strong><small>Perlindungan siswa</small></div><button class="help" id="help">?</button></header>
-<section class="intro"><div class="eyebrow">KAMU TIDAK SENDIRIAN</div><h1>Butuh bantuan?</h1><p>Pilih tombol yang sesuai. Petugas sekolah akan menindaklanjuti laporan.</p></section>
-<section class="actions">
-<button class="tile sos" id="sos"><span class="icon">SOS</span><span class="title">DARURAT</span><span class="desc">Tekan & tahan</span></button>
-<button class="tile witness" id="witness"><span class="icon">👁</span><span class="title">LIHAT KEJADIAN?</span><span class="desc">Lapor sebagai saksi</span></button>
-<button class="tile bully" id="bully"><span class="icon">🛡</span><span class="title">SAYA DI-BULLY</span><span class="desc">Minta pendampingan</span></button>
-<button class="tile safe" id="safe"><span class="icon">⌖</span><span class="title">LOKASI AMAN</span><span class="desc">Cari tempat meminta bantuan</span></button>
+<header><div class="logo">✚</div><div class="brand"><strong>DON BOSCO <span>SAFE</span></strong><small>Student Protection System</small></div><button class="topbtn" id="soundToggle">🔊 Suara ON</button></header>
+
+<section id="loginScreen" class="screen active">
+ <div class="login-intro"><div class="eyebrow">RUANG AMAN UNTUK SISWA</div><h1>Selamat datang.</h1><p class="muted">Pilih jenis akun untuk masuk ke simulasi Don Bosco Safe.</p></div>
+ <div class="role-grid">
+  <button class="role" id="studentRole"><span class="emoji">🎒</span><b>MASUK SISWA</b><small>Student access</small></button>
+  <button class="role" id="staffRole"><span class="emoji">🛡️</span><b>MASUK PETUGAS</b><small>Staff access</small></button>
+ </div>
+ <div class="note">Versi demonstrasi GitHub Pages. Login di sini menggunakan data demo, bukan autentikasi Gmail sungguhan.</div>
 </section>
-<div class="privacy"><b>🔒</b><span>Laporan ditangani petugas berwenang. Identitas pelapor tidak ditampilkan kepada siswa lain.</span></div>
-<button class="staff" id="staff">Panel simulasi petugas</button>
-<footer>DON BOSCO SAFE · DEMO / BUKAN LAYANAN DARURAT AKTUAL</footer>
+
+<section id="studentLogin" class="screen">
+ <button class="back" data-back>← Kembali</button>
+ <div class="login-intro"><div class="eyebrow">AKUN SISWA</div><h1>Data diri siswa</h1><p class="muted">Isi data demo untuk masuk. Tidak perlu membuat akun Gmail sungguhan.</p></div>
+ <div class="card">
+  <div class="field"><label>Nama lengkap</label><input id="sName" placeholder="Contoh: Alya Pratama"></div>
+  <div class="field"><label>Email (demo)</label><input id="sEmail" type="email" placeholder="nama@gmail.com"></div>
+  <div class="field"><label>Jenjang</label><select id="sLevel"><option>SD</option><option>SMP</option><option>SMA</option><option>TK</option></select></div>
+  <div class="field"><label>Kelas</label><input id="sClass" placeholder="Contoh: 8A"></div>
+  <div class="field"><label>Nama sekolah</label><input id="sSchool" placeholder="Nama sekolah"></div>
+  <button class="btn primary full" id="studentEnter">Masuk sebagai siswa</button>
+ </div>
+</section>
+
+<section id="staffLogin" class="screen">
+ <button class="back" data-back>← Kembali</button>
+ <div class="login-intro"><div class="eyebrow">AKUN PETUGAS</div><h1>Login petugas</h1><p class="muted">Masuk ke panel penerimaan laporan simulasi.</p></div>
+ <div class="card">
+  <div class="field"><label>Email petugas (demo)</label><input id="staffEmail" type="email" value="petugas@donbosco.demo"></div>
+  <div class="field"><label>Kode demo</label><input id="staffCode" type="password" placeholder="Masukkan kode demo"></div>
+  <button class="btn primary full" id="staffEnter">Masuk sebagai petugas</button>
+  <p class="muted" style="font-size:10px">Kode demo: <b>DONBOSCO123</b></p>
+ </div>
+ <div class="note warning">Untuk demonstrasi saja. Kode ini bukan keamanan akun sungguhan.</div>
+</section>
+
+<section id="studentHome" class="screen">
+ <div class="home-head"><div class="eyebrow">KAMU TIDAK SENDIRIAN</div><h1>Butuh bantuan?</h1><div class="profile-chip" id="studentProfile"></div><p class="muted">Pilih tombol yang sesuai.</p></div>
+ <div class="actions">
+  <button class="tile sos" id="sosBtn"><span class="tile-icon">SOS</span><b>DARURAT</b><small>Tekan & tahan · alarm demo</small></button>
+  <button class="tile witness" id="witnessBtn"><span class="tile-icon">👁</span><b>LIHAT KEJADIAN?</b><small>Lapor sebagai saksi</small></button>
+  <button class="tile bully" id="bullyBtn"><span class="tile-icon">🛡</span><b>SAYA DI-BULLY</b><small>Minta pendampingan</small></button>
+  <button class="tile safe" id="safeBtn"><span class="tile-icon">⌖</span><b>LOKASI AMAN</b><small>Ruang guru · BK · Pos keamanan</small></button>
+ </div>
+ <div class="privacy">🔒 <span>Laporan simulasi ditampilkan pada panel petugas di browser/perangkat yang sama.</span></div>
+ <div class="bottomrow"><button class="linkbtn" id="studentLogout">Keluar akun</button><button class="linkbtn" id="demoReset">Reset data demo</button></div>
+</section>
+
+<section id="staffHome" class="screen">
+ <div class="dashboard-title"><div class="eyebrow">PANEL PETUGAS</div><h1>Dashboard laporan</h1><p class="muted">Pantau dan tindak lanjuti laporan demo.</p></div>
+ <div class="statgrid"><div class="stat"><strong id="totalReports">0</strong><span>Total laporan</span></div><div class="stat"><strong id="urgentReports">0</strong><span>Laporan darurat</span></div></div>
+ <div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Daftar laporan</h2><button class="btn secondary" id="testAlarm">▶ Tes alarm</button></div><div id="reportList"><p class="muted">Belum ada laporan.</p></div></div>
+ <div class="note warning">Demo satu perangkat: laporan tersimpan di browser ini. HP lain tidak menerima laporan otomatis karena GitHub Pages tidak menyediakan database bersama.</div>
+ <div class="bottomrow"><button class="linkbtn" id="staffLogout">Keluar akun</button><button class="linkbtn" id="staffClear">Hapus laporan demo</button></div>
+</section>
+<footer style="margin-top:15px;text-align:center;color:#9aa5b0;font-size:9px">DEMO · BUKAN LAYANAN DARURAT AKTUAL</footer>
 </main>
-<div class="overlay" id="overlay" hidden><section class="sheet" role="dialog" aria-modal="true"><button class="close" id="close">×</button><div class="sheet-icon" id="sheetIcon">!</div><h2 id="sheetTitle"></h2><p id="sheetText"></p><div class="choices" id="choices"></div><div id="extra"></div><div class="sheet-buttons"><button class="send" id="send">Kirim laporan</button><button class="cancel" id="cancel">Kembali</button></div></section></div>
-<div class="toast" id="toast" role="status"></div>
+
+<div class="overlay" id="overlay" hidden><section class="sheet" role="dialog" aria-modal="true"><button class="close" id="closeSheet">×</button><h2 id="sheetTitle"></h2><p id="sheetText"></p><div class="choices" id="choices"></div><div class="sheetbuttons"><button class="btn primary" id="sheetSend">Kirim laporan</button><button class="btn secondary" id="sheetCancel">Batal</button></div></section></div>
+<div class="toast" id="toast"></div>
 <script>
 (()=>{
-const $=id=>document.getElementById(id);let mode="",selected="",reports=[],hold=null,toastTimer;
-function toast(t){$("toast").textContent=t;$("toast").classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>$("toast").classList.remove("show"),2800)}
-function close(){ $("overlay").hidden=true }
-function open(kind,title,desc,icon,opts=[]){
-mode=kind;selected=opts[0]||"";$("sheetTitle").textContent=title;$("sheetText").textContent=desc;$("sheetIcon").textContent=icon;$("choices").innerHTML="";$("extra").innerHTML="";
-opts.forEach((o,i)=>{let b=document.createElement("button");b.className="choice"+(i===0?" active":"");b.textContent=o;b.onclick=()=>{selected=o;document.querySelectorAll(".choice").forEach(x=>x.classList.toggle("active",x===b))};$("choices").appendChild(b)});
-$("send").style.display=kind==="safe"?"none":"block";$("overlay").hidden=false;
+const $=id=>document.getElementById(id);let reports=JSON.parse(localStorage.getItem('dbsafe_reports')||'[]'),profile=null,mode='',selected='',holdTimer=null,alarmOn=true,toastTimer=null;
+function save(){localStorage.setItem('dbsafe_reports',JSON.stringify(reports))}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
+function alarm(seconds=5){
+ if(!alarmOn)return;
+ try{const C=window.AudioContext||window.webkitAudioContext;if(!C){toast('Browser tidak mendukung suara alarm.');return}
+ const ctx=new C();if(ctx.state==='suspended')ctx.resume();
+ let start=ctx.currentTime, duration=seconds;
+ for(let t=0;t<duration;t+=.8){[0,.22].forEach((offset,i)=>{let osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sawtooth';osc.frequency.value=i?920:680;gain.gain.setValueAtTime(.0001,start+t+offset);gain.gain.exponentialRampToValueAtTime(.18,start+t+offset+.025);gain.gain.setValueAtTime(.18,start+t+offset+.13);gain.gain.exponentialRampToValueAtTime(.0001,start+t+offset+.19);osc.connect(gain);gain.connect(ctx.destination);osc.start(start+t+offset);osc.stop(start+t+offset+.21)})}
+ setTimeout(()=>ctx.close(),(duration+1)*1000);
+ }catch(e){toast('Suara tidak dapat diputar di browser ini.')}
 }
-function send(type,detail){reports.unshift({type,detail,time:new Date().toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})});close();toast("✓ Simulasi laporan terkirim ke petugas sekolah.")}
-$("sos").addEventListener("pointerdown",e=>{e.preventDefault();$("sos").style.transform="scale(.97)";hold=setTimeout(()=>send("SOS DARURAT","Butuh pertolongan segera"),1300)});
-["pointerup","pointerleave","pointercancel"].forEach(ev=>$("sos").addEventListener(ev,()=>{clearTimeout(hold);$("sos").style.transform=""}));
-$("witness").onclick=()=>open("witness","Apa yang kamu lihat?","Pilih kejadian. Tidak perlu mengetik atau mendekati pelaku.","👁",["Perkelahian","Pengeroyokan","Bullying fisik","Ancaman / intimidasi"]);
-$("bully").onclick=()=>open("bully","Kamu tidak sendiri.","Pilih jenis kejadian. Petugas akan menindaklanjuti secara pribadi.","🛡",["Diejek / dihina","Dikucilkan","Diancam / diperas","Disakiti secara fisik","Bullying online"]);
-$("safe").onclick=()=>{open("safe","Tempat meminta bantuan","Jika merasa tidak aman, pergilah ke tempat ramai dan cari orang dewasa tepercaya.","⌖");$("extra").innerHTML='<div class="quick">📍 <b>Ruang Guru</b><br>Temui guru yang bertugas.</div><div class="quick">📍 <b>Ruang BK</b><br>Meminta pendampingan.</div><div class="quick">📍 <b>Pos Keamanan</b><br>Untuk bantuan segera.</div>'};
-$("help").onclick=()=>open("help","Cara menggunakan","DARURAT: tekan dan tahan. LIHAT KEJADIAN: laporkan sebagai saksi. SAYA DI-BULLY: minta pendampingan. Jangan mendekati pelaku.","?",["Saya mengerti"]);
-$("send").onclick=()=>{if(mode==="witness")send("SAFE WITNESS",selected);else if(mode==="bully")send("ANTI-BULLYING",selected);else if(mode==="help"){close();toast("Tetap jaga keselamatan.")}};
-$("close").onclick=close;$("cancel").onclick=close;$("overlay").onclick=e=>{if(e.target===$("overlay"))close()};
-$("staff").onclick=()=>alert("PANEL PETUGAS — SIMULASI\n\n"+(reports.length?reports.map(r=>r.time+" · "+r.type+" · "+r.detail).join("\n"):"Belum ada laporan.")+"\n\nData hanya tersimpan sementara di browser ini.");
+function openSheet(kind,title,desc,opts){mode=kind;selected=opts[0]||'';$('sheetTitle').textContent=title;$('sheetText').textContent=desc;$('choices').innerHTML='';opts.forEach((o,i)=>{let b=document.createElement('button');b.className='choice'+(!i?' active':'');b.textContent=o;b.onclick=()=>{selected=o;document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('active',x===b))};$('choices').appendChild(b)});$('overlay').hidden=false}
+function closeSheet(){$('overlay').hidden=true}
+function submit(type,detail){let r={id:Date.now(),type,detail,student:profile?profile.name:'Siswa demo',email:profile?profile.email:'',className:profile?profile.level+' '+profile.klass:'',school:profile?profile.school:'',time:new Date().toLocaleString('id-ID'),status:'Menunggu'};reports.unshift(r);save();closeSheet();toast('✓ Laporan simulasi tercatat.');if(type==='SOS DARURAT')alarm(6);renderReports()}
+$('studentRole').onclick=()=>show('studentLogin');$('staffRole').onclick=()=>show('staffLogin');document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show('loginScreen'));
+$('studentEnter').onclick=()=>{let name=$('sName').value.trim(),email=$('sEmail').value.trim(),klass=$('sClass').value.trim(),school=$('sSchool').value.trim();if(!name||!email||!klass||!school){toast('Lengkapi nama, email, kelas, dan sekolah.');return}if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){toast('Format email belum benar.');return}profile={name,email,level:$('sLevel').value,klass,school};$('studentProfile').textContent=name+' · '+profile.level+' '+klass+' · '+school;show('studentHome')};
+$('staffEnter').onclick=()=>{if($('staffCode').value!=='DONBOSCO123'){toast('Kode demo salah.');return}show('staffHome');renderReports()};
+$('studentLogout').onclick=()=>{profile=null;show('loginScreen')};$('staffLogout').onclick=()=>show('loginScreen');
+$('soundToggle').onclick=()=>{alarmOn=!alarmOn;$('soundToggle').textContent=alarmOn?'🔊 Suara ON':'🔇 Suara OFF';if(alarmOn)alarm(1)};
+$('sosBtn').addEventListener('pointerdown',e=>{e.preventDefault();$('sosBtn').style.transform='scale(.97)';holdTimer=setTimeout(()=>{submit('SOS DARURAT','Butuh pertolongan segera');$('sosBtn').style.transform=''},1200)});
+['pointerup','pointerleave','pointercancel'].forEach(ev=>$('sosBtn').addEventListener(ev,()=>{clearTimeout(holdTimer);$('sosBtn').style.transform=''}));
+$('witnessBtn').onclick=()=>openSheet('witness','Apa yang kamu lihat?','Pilih kejadian. Jangan mendekati atau menghadapi pelaku.',['Perkelahian','Pengeroyokan','Bullying fisik','Ancaman / intimidasi']);
+$('bullyBtn').onclick=()=>openSheet('bully','Kamu tidak sendiri.','Pilih jenis kejadian. Petugas akan menindaklanjuti.',['Diejek / dihina','Dikucilkan','Diancam / diperas','Disakiti secara fisik','Bullying online']);
+$('safeBtn').onclick=()=>openSheet('safe','Lokasi aman','Jika merasa tidak aman, pergilah ke tempat ramai dan cari orang dewasa tepercaya.',['Ruang guru','Ruang BK','Pos keamanan']);
+$('sheetSend').onclick=()=>{if(mode==='witness')submit('SAFE WITNESS',selected);if(mode==='bully')submit('ANTI-BULLYING',selected);if(mode==='safe'){closeSheet();toast('Silakan menuju '+selected+'.')}};
+$('closeSheet').onclick=closeSheet;$('sheetCancel').onclick=closeSheet;$('overlay').onclick=e=>{if(e.target===$('overlay'))closeSheet()};
+function renderReports(){$('totalReports').textContent=reports.length;$('urgentReports').textContent=reports.filter(r=>r.type==='SOS DARURAT').length;$('reportList').innerHTML=reports.length?reports.map(r=>`<div class="report"><div class="reporttop"><b>${r.type}</b><span class="pill ${r.status==='Selesai'?'green':r.type==='SOS DARURAT'?'':'amber'}">${r.status}</span></div><p>${r.detail} · ${r.time}</p><p>${r.student} · ${r.className}<br>${r.school}</p><button class="btn secondary" data-id="${r.id}">${r.status==='Selesai'?'Selesai':'Tandai selesai'}</button></div>`).join(''):'<p class="muted">Belum ada laporan.</p>';$('reportList').querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{let r=reports.find(x=>x.id==b.dataset.id);if(r){r.status='Selesai';save();renderReports()}})}
+$('testAlarm').onclick=()=>alarm(5);$('staffClear').onclick=()=>{if(confirm('Hapus semua laporan demo?')){reports=[];save();renderReports()}};$('demoReset').onclick=()=>{if(confirm('Hapus semua laporan demo dari browser ini?')){reports=[];save();toast('Data demo dihapus.')}};
 })();
 </script>
 </body></html>
